@@ -1,0 +1,7 @@
+{
+    "VLAN": 100,
+    "SSID": "OpenWifi",
+    "WIFI_ENCRYPTION": "psk2",
+    "WIFI_KEY": "OpenWifi",
+    "SSID_NAT": "OpenWifi-NAT"
+}

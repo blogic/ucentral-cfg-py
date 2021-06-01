@@ -1,0 +1,114 @@
+{
+	"uuid": 1,
+	"radios": [
+		{
+			"band": "6G",
+			"country": "CA",
+			"channel-mode": "HE",
+			"channel-width": 80
+		},
+		{
+			"band": "5G",
+			"country": "CA",
+			"channel-mode": "HE",
+			"channel-width": 80
+		},
+		{
+			"band": "2G",
+			"country": "CA",
+			"channel-mode": "HE",
+			"channel-width": 80
+		}
+	],
+
+	"interfaces": [
+		{
+			"name": "WAN",
+			"role": "upstream",
+			"ethernet": [
+				{
+					"select-ports": [
+						"WAN*"
+					]
+				}
+			],
+			"ipv4": {
+				"addressing": "dynamic"
+			}
+		},
+		{
+			"name": "WAN_VLAN",
+			"role": "upstream",
+			"vlan": {
+				"id": "$i/VLAN/100"
+			},
+			"ethernet": [
+				{
+					"select-ports": [
+						"WAN*"
+					]
+				}
+			],
+			"ipv4": {
+				"addressing": "dynamic"
+			},
+			"ssids": [
+				{
+					"name": "$s/SSID/OpenWifi",
+					"wifi-bands": [
+						"5G",
+						"2G"
+					],
+					"bss-mode": "ap",
+					"encryption": {
+						"proto": "$s/WIFI_ENCRYPTION/psk2",
+						"key": "$s/WIFI_KEY/OpenWifi"
+					}
+				}
+			]
+		},
+		{
+			"name": "LAN",
+			"role": "downstream",
+			"vlan": {
+				"id": "$i/VLAN/100"
+			},
+			"services": [ "ssh" ],
+			"ethernet": [
+				{
+					"select-ports": [
+						"LAN*"
+					]
+				}
+			],
+			"ipv4": {
+				"addressing": "static",
+				"subnet": "192.168.1.1/24",
+				"dhcp": {
+					"lease-first": 10,
+					"lease-count": 100,
+					"lease-time": "6h"
+				}
+			},
+			"ssids": [
+				{
+					"name": "$s/SSID_NAT/OpenWifi-NAT",
+					"wifi-bands": [
+						"5G",
+						"2G"
+					],
+					"bss-mode": "ap",
+					"encryption": {
+						"proto": "$s/WIFI_ENCRYPTION/psk2",
+						"key": "$s/WIFI_KEY/OpenWifi"
+					}
+				}
+			]
+		}
+	],
+	"services": {
+		"ssh": {
+			"port": 22
+		}
+	}
+}
